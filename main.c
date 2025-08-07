@@ -6,21 +6,11 @@
 /*   By: yingzhan <yingzhan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:32:19 by yingzhan          #+#    #+#             */
-/*   Updated: 2025/08/07 16:33:42 by yingzhan         ###   ########.fr       */
+/*   Updated: 2025/08/07 16:40:51 by yingzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-static int	invalid_input(int ac)
-{
-	if (ac != 5)
-	{
-		ft_putstr_fd("Input invalid", STDERR_FILENO);
-		return (1);
-	}
-	return (0);
-}
 
 static void	pipe_init(t_pipex *p, char **av)
 {
@@ -36,7 +26,6 @@ static void	pipe_init(t_pipex *p, char **av)
 		close(p->out_fd);
 		error_exit("Pipe");
 	}
-	p->exit_code = 0;
 }
 
 static void	cmd_exec_1(t_pipex *p, char **av, char **ep)
@@ -94,25 +83,18 @@ static void	cmd_exec_2(t_pipex *p, char **av, char **ep)
 int	main(int ac, char **av, char *ep[])
 {
 	t_pipex	p;
-	int		status;
 
-	if (invalid_input(ac))
+	if (ac != 5)
+	{
+		ft_putstr_fd("Input invalid", STDERR_FILENO);
 		return (1);
+	}
 	pipe_init(&p, av);
 	cmd_exec_1(&p, av, ep);
-	waitpid(p.pid[0], &status, 0);
-	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-	{
-		close(p.pfd[0]);
-		close(p.in_fd);
-		close(p.out_fd);
-		return (WEXITSTATUS(status));
-	}
 	cmd_exec_2(&p, av, ep);
-	waitpid(p.pid[1], &status, 0);
-	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-		p.exit_code = WEXITSTATUS(status);
+	waitpid(p.pid[0], NULL, 0);
+	waitpid(p.pid[1], NULL, 0);
 	close(p.in_fd);
 	close(p.out_fd);
-	return (p.exit_code);
+	return (0);
 }

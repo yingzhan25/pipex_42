@@ -6,7 +6,7 @@
 /*   By: yingzhan <yingzhan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 14:41:12 by yingzhan          #+#    #+#             */
-/*   Updated: 2025/08/07 16:16:46 by yingzhan         ###   ########.fr       */
+/*   Updated: 2025/08/07 16:41:02 by yingzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_pipex
 {
 	int		in_fd;
 	int		out_fd;
-	int		exit_code;
 	int		pid[2];
 	int		pfd[2];
 	char	**cmd[2];
