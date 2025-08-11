@@ -1,0 +1,53 @@
+Basic Tests
+
+    Two commands with pipe
+	./pipex infile "grep hello" "wc -l" outfile
+	(Should behave like: < infile grep hello | wc -l > outfile)
+
+Edge Cases
+
+    Empty commands
+	./pipex infile "" "" outfile
+	(Should handle errors appropriately)
+
+Non-existent first command
+
+	./pipex infile "nonexistentcmd" "wc" outfile
+	(Should give command not found error)
+
+Non-existent second command
+
+	./pipex infile "ls" "nonexistentcmd" outfile
+	(Should give command not found error)
+
+Non-existent input file
+
+	./pipex non_existent_file "cat" "wc" outfile
+	(Should handle file opening error)
+
+Permission Tests
+
+No read permission on input file
+	chmod 000 infile
+	./pipex infile "cat" "cat" outfile
+	(Should handle permission error)
+
+No write permission on output file
+	touch outfile
+	chmod 400 outfile
+	./pipex infile "echo hello" "cat" outfile
+	(Should handle permission error)
+
+Complex Commands
+
+Commands with quotes
+
+	./pipex infile "grep 'hello world'" "awk '{print \$1}'" outfile
+
+Commands with environment variables
+
+	./pipex infile "echo \$HOME" "tr '/' '\n'" outfile
+
+Multiple flags/options
+
+	./pipex infile "ls -la /tmp" "grep test" "wc -w" outfile

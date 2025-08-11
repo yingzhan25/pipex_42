@@ -6,13 +6,13 @@
 /*   By: yingzhan <yingzhan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 09:52:44 by yingzhan          #+#    #+#             */
-/*   Updated: 2025/08/08 12:16:41 by yingzhan         ###   ########.fr       */
+/*   Updated: 2025/08/11 16:11:35 by yingzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-char	**parse_cmd(char *str)
+char	**parse_cmd(char *str, t_pipex *p)
 {
 	char	**arr;
 	const char	*s;
@@ -22,6 +22,14 @@ char	**parse_cmd(char *str)
 	if (!arr)
 	{
 		ft_putstr_fd("Failed memory allocation", STDERR_FILENO);
+		free_pipex(p);
+		exit(EXIT_FAILURE);
+	}
+	if (!*arr)
+	{
+		ft_putstr_fd("Failed parsing command", STDERR_FILENO);
+		free(arr);
+		free_pipex(p);
 		exit(EXIT_FAILURE);
 	}
 	return (arr);

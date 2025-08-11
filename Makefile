@@ -6,14 +6,14 @@
 #    By: yingzhan <yingzhan@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/01 14:06:20 by yingzhan          #+#    #+#              #
-#    Updated: 2025/08/08 10:03:31 by yingzhan         ###   ########.fr        #
+#    Updated: 2025/08/11 15:21:47 by yingzhan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 NAME_BONUS = pipex_bonus
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 RM = rm -f
 INCLUDES = -I./ -I./libft/includes/
 

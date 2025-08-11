@@ -6,7 +6,7 @@
 /*   By: yingzhan <yingzhan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 14:31:12 by yingzhan          #+#    #+#             */
-/*   Updated: 2025/08/07 15:23:43 by yingzhan         ###   ########.fr       */
+/*   Updated: 2025/08/11 16:08:22 by yingzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ static char	**parse_cmd(char *str)
 	if (!arr)
 	{
 		ft_putstr_fd("Failed memory allocation", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
+	if (!*arr)
+	{
+		ft_putstr_fd("Failed parsing command", STDERR_FILENO);
+		free(arr);
 		exit(EXIT_FAILURE);
 	}
 	return (arr);

@@ -6,7 +6,7 @@
 /*   By: yingzhan <yingzhan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 14:40:50 by yingzhan          #+#    #+#             */
-/*   Updated: 2025/08/08 12:16:31 by yingzhan         ###   ########.fr       */
+/*   Updated: 2025/08/11 16:10:35 by yingzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void	args_parse(t_pipex *p, int ac, char **av)
 	int	j;
 
 	p->cmd_num = ac - 3;
-	p->cmd = malloc(sizeof(char**) * p->cmd_num);
+	p->cmd = ft_calloc(p->cmd_num + 1, sizeof(char**));
 	if (!p->cmd)
 	{
 		ft_putstr_fd("Failed memory allocation", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
-	p->path = malloc(sizeof(char*) * p->cmd_num);
+	p->path = ft_calloc(p->cmd_num + 1, sizeof(char*));
 	if (!p->path)
 	{
 		free_pipex(p);
@@ -46,7 +46,7 @@ void	args_parse(t_pipex *p, int ac, char **av)
 	j = 2;
 	while (i < p->cmd_num)
 	{
-		p->cmd[i] = parse_cmd(av[j]);
+		p->cmd[i] = parse_cmd(av[j], p);
 		p->path[i] = parse_path(p->cmd[i][0], getenv("PATH"));
 		if (!p->path[i])
 		{
@@ -66,14 +66,21 @@ void	check_params(t_pipex *p, int ac, char **av)
 	if (!p->pids)
 	{
 		ft_putstr_fd("Failed memory allocation", STDERR_FILENO);
+		free_pipex(p);
 		exit(EXIT_FAILURE);
 	}
 	p->in_fd = open(av[1], O_RDONLY);
 	if (p->in_fd == -1)
+	{
+		free_pipex(p);
 		error_exit("Open infile");
+	}
 	p->out_fd = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (p->out_fd == -1)
+	{
+		free_pipex(p);
 		error_exit("Open outfile");
+	}
 }
 
 void	child_process(int *pfd, int i, t_pipex *p, char **ep)

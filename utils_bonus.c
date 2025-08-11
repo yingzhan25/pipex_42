@@ -6,7 +6,7 @@
 /*   By: yingzhan <yingzhan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:36:16 by yingzhan          #+#    #+#             */
-/*   Updated: 2025/08/08 12:15:21 by yingzhan         ###   ########.fr       */
+/*   Updated: 2025/08/11 12:28:57 by yingzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,15 @@ void	error_exit(char *s)
 void	free_pipex(t_pipex *p)
 {
 	int	i;
-	int	j;
 
 	if (p->pids)
 		free(p->pids);
 	if (p->cmd)
 	{
 		i = 0;
-		while (i < p->cmd_num)
+		while (p->cmd[i] && i < p->cmd_num)
 		{
-			j = 0;
-			while (j < p->cmd_num)
-			{
-				free(p->cmd[i][j]);
-				j++;
-			}
-			free(p->cmd[i]);
+			clean_array(p->cmd[i]);
 			i++;
 		}
 		free(p->cmd);
@@ -80,15 +73,17 @@ void	free_pipex(t_pipex *p)
 	if (p->path)
 	{
 		i = 0;
-		while (i < p->cmd_num)
+		while (p->path[i] && i < p->cmd_num)
 		{
 			free(p->path[i]);
 			i++;
 		}
 		free(p->path);
 	}
-	if (p->in_fd > 0)
+	if (p->in_fd != -1)
 		close(p->in_fd);
-	if (p->out_fd > 0)
+	if (p->out_fd != -1)
 		close(p->out_fd);
+	if (p->prev != -1)
+		close(p->prev);
 }
