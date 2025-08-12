@@ -6,7 +6,7 @@
 /*   By: yingzhan <yingzhan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:12:12 by yingzhan          #+#    #+#             */
-/*   Updated: 2025/08/07 14:56:54 by yingzhan         ###   ########.fr       */
+/*   Updated: 2025/08/12 15:25:47 by yingzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,26 @@ static int	ft_handle_bytes(int fd, char **buffer)
 static int	ft_new_lines(char **buffer, char **line)
 {
 	char	*temp;
-	char	*newline_pos;
 
-	newline_pos = ft_strchr_g(*buffer, '\n');
-	*line = ft_substr(*buffer, 0, newline_pos - *buffer + 1);
+	*line = ft_substr(*buffer, 0, ft_strchr_g(*buffer, '\n') - *buffer + 1);
 	if (!*line)
 		return (-1);
-	if (*(newline_pos + 1) == '\0')
-		temp = ft_strdup_g("");
-	else
-		temp = ft_strdup_g(newline_pos + 1);
-	if (!temp)
+	if (*(ft_strchr_g(*buffer, '\n') + 1) == '\0')
 	{
-		free(*line);
-		return (-1);
+		free(*buffer);
+		*buffer = NULL;
 	}
-	free (*buffer);
-	*buffer = temp;
+	else
+	{
+		temp = ft_strdup_g(ft_strchr_g(*buffer, '\n') + 1);
+		if (!temp)
+		{
+			free(*line);
+			return (-1);
+		}
+		free (*buffer);
+		*buffer = temp;
+	}
 	return (0);
 }
 

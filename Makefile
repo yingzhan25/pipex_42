@@ -6,7 +6,7 @@
 #    By: yingzhan <yingzhan@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/01 14:06:20 by yingzhan          #+#    #+#              #
-#    Updated: 2025/08/11 15:21:47 by yingzhan         ###   ########.fr        #
+#    Updated: 2025/08/12 17:15:19 by yingzhan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ RM = rm -f
 INCLUDES = -I./ -I./libft/includes/
 
 SRCS = main.c parse.c utils.c
-BONUS_SRCS = main_bonus.c parse_bonus.c utils_bonus.c
+BONUS_SRCS = parse_bonus.c utils_bonus.c init_bonus.c clean_bonus.c main_bonus.c
 OBJS = $(SRCS:.c=.o)
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 

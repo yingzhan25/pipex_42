@@ -6,12 +6,11 @@
 /*   By: yingzhan <yingzhan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:36:16 by yingzhan          #+#    #+#             */
-/*   Updated: 2025/08/11 12:28:57 by yingzhan         ###   ########.fr       */
+/*   Updated: 2025/08/12 18:19:06 by yingzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pipex_bonus.h>
-
 
 char	*path_join(char *dir, char *cmd)
 {
@@ -54,36 +53,9 @@ void	error_exit(char *s)
 	exit(EXIT_FAILURE);
 }
 
-void	free_pipex(t_pipex *p)
+char	*return_path(char *path)
 {
-	int	i;
-
-	if (p->pids)
-		free(p->pids);
-	if (p->cmd)
-	{
-		i = 0;
-		while (p->cmd[i] && i < p->cmd_num)
-		{
-			clean_array(p->cmd[i]);
-			i++;
-		}
-		free(p->cmd);
-	}
-	if (p->path)
-	{
-		i = 0;
-		while (p->path[i] && i < p->cmd_num)
-		{
-			free(p->path[i]);
-			i++;
-		}
-		free(p->path);
-	}
-	if (p->in_fd != -1)
-		close(p->in_fd);
-	if (p->out_fd != -1)
-		close(p->out_fd);
-	if (p->prev != -1)
-		close(p->prev);
+	if (!path)
+		return (NULL);
+	return (path);
 }

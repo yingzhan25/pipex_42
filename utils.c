@@ -6,7 +6,7 @@
 /*   By: yingzhan <yingzhan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:32:56 by yingzhan          #+#    #+#             */
-/*   Updated: 2025/08/07 15:23:55 by yingzhan         ###   ########.fr       */
+/*   Updated: 2025/08/12 18:32:15 by yingzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ char	*return_path(char *path)
 {
 	if (!path)
 		return (NULL);
-	return (ft_strdup(path));
+	return (path);
 }
