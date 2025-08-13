@@ -6,12 +6,14 @@
 /*   By: yingzhan <yingzhan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 14:41:12 by yingzhan          #+#    #+#             */
-/*   Updated: 2025/08/07 16:41:02 by yingzhan         ###   ########.fr       */
+/*   Updated: 2025/08/13 12:04:39 by yingzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
+
+# define EXIT_CMD_NOT_FOUND 127
 
 # include "./libft/includes/libft.h"
 # include "./libft/includes/ft_printf.h"

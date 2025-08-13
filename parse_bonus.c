@@ -6,7 +6,7 @@
 /*   By: yingzhan <yingzhan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 09:52:44 by yingzhan          #+#    #+#             */
-/*   Updated: 2025/08/12 18:15:50 by yingzhan         ###   ########.fr       */
+/*   Updated: 2025/08/13 11:36:47 by yingzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,9 @@ static void	fill_arr(t_pipex *p, int j, char **av)
 		{
 			ft_putstr_fd("Command not found: ", STDERR_FILENO);
 			ft_putstr_fd(p->cmd[i][0], STDERR_FILENO);
+			ft_putstr_fd("\n", STDERR_FILENO);
 			free_pipex(p);
-			exit(EXIT_FAILURE);
+			exit(EXIT_CMD_NOT_FOUND);
 		}
 		i++;
 		j++;

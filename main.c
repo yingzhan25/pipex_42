@@ -6,7 +6,7 @@
 /*   By: yingzhan <yingzhan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:32:19 by yingzhan          #+#    #+#             */
-/*   Updated: 2025/08/07 18:10:57 by yingzhan         ###   ########.fr       */
+/*   Updated: 2025/08/13 12:06:31 by yingzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,25 @@ static void	cmd_exec_2(t_pipex *p, char **av, char **ep)
 		close(p->pfd[0]);
 }
 
+void	wait_process(t_pipex *p)
+{
+	int	status;
+	int	i;
+
+	i = 0;
+	while (i < 2)
+	{
+		waitpid(p->pid[i], &status, 0);
+		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+		{
+			close(p->in_fd);
+			close(p->out_fd);
+			exit(WEXITSTATUS(status));
+		}
+		i++;
+	}
+}
+
 int	main(int ac, char **av, char *ep[])
 {
 	t_pipex	p;
@@ -92,8 +111,7 @@ int	main(int ac, char **av, char *ep[])
 	pipe_init(&p, av);
 	cmd_exec_1(&p, av, ep);
 	cmd_exec_2(&p, av, ep);
-	waitpid(p.pid[0], NULL, 0);
-	waitpid(p.pid[1], NULL, 0);
+	wait_process(&p);
 	close(p.in_fd);
 	close(p.out_fd);
 	return (0);
